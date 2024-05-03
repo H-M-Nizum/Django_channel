@@ -1,0 +1,27 @@
+1) Django Channels :
+    Channels allow Django projects to handle HTTP along with asynchronous protocols like WebSockets, MQTT, 
+    chatbots, and more. Channels preserve the synchronous behavior of Django and add a layer of asynchronous 
+    protocols allowing users to write the views that are entirely synchronous, asynchronous, or a mixture 
+    of both. Channels basically allow the application to support “long-running connections”. It replaces 
+    Django’s default WSGI with its ASGI.
+
+2) Installation :
+    . Install using pip -
+            pip install channels 
+            pip install django-channels
+    . Uninstall using pip -
+            pip uninstall channels 
+
+3) Configurations : 
+    Setting.py -
+        INSTALLED_APPS = [
+            'channels',
+            .....,
+        ]
+    
+    . asgi.py -
+        from channels.routing import ProtocolTypeRouter
+        application = ProtocolTypeRouter({
+            "http" : get_asgi_application(),
+            
+        })
