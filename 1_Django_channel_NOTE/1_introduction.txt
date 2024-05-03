@@ -18,10 +18,12 @@
             'channels',
             .....,
         ]
+
+        ASGI_APPLICATION = 'project_name.asgi.application'
     
     . asgi.py -
         from channels.routing import ProtocolTypeRouter
         application = ProtocolTypeRouter({
             "http" : get_asgi_application(),
-            
+
         })
