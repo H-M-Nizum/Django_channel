@@ -1,0 +1,33 @@
+1) Routing :- 
+    Channels provides routing classes that allow you to combine and stack your consumers 
+    (and any other valid ASGI application) to dispatch based on what the connection is. 
+    . We call the as_asgi() classmethod when routing our consumers. 
+    
+    . This returns an ASGI wrapper application that will instantiate a new consumer instance 
+      for each connection or scope. 
+    . This is similar to Django's as_view(), which plays the same role for per-request instances 
+      of class-based views. 
+        
+        • Create routing.py File then write all websocket url patterns inside this file. 
+        • Open asgi.py file and mentioned your routing.py file.
+
+    Example -
+        app/routing.py 
+        from django.urls import path 
+        from. import consumers 
+        
+        websocket_urlpatterns = [
+            path('ws/sc/', consumers.MySyncConsumer.as_asgi()),
+        ]
+
+        my_project/asgi.py 
+        from channels.routing import ProtocolTypeRouter, URLRouter 
+        import app.routing 
+        
+        application = ProtocolTypeRouter({ 
+            'http': get_asgi_application(), 
+            'websocket': URLRouter( 
+                app.routing.websocket_urlpatterns 
+            )
+            
+        })
