@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Hello chat</h1>
+    <div>
+        <input id="input" type="text">
+        <button type="submit" id="button" style="border: 5px solid; padding: 10px 20px;">Send</button>
+    </div>
+    <div>
+        <h1>Your Message : <span id="client"></span></h1>
+    </div>
+    <div>
+        <h1>Server Message : <span id="real_data"></span></h1>
+
+    </div>
+
+    <script>
+        let ws = new WebSocket('ws://127.0.01:8000/ws/real/')
+
+        ws.onopen = function (event) {
+            console.log("WebSocket Connection Open", event)
+            document.getElementById('button').addEventListener('click', function(){
+                ws.send(document.getElementById('input').value)
+            })
+            
+        }
+        ws.onmessage = function (event) {
+            console.log("WebSocket Message Received From Server", event['data'])
+            document.getElementById('client').innerText = document.getElementById('input').value
+            document.getElementById('real_data').innerText = `Ai obostha : ${event['data']}`
+            
+        }
+        ws.onerror = function (event) {
+            console.log("WebSocket Error Occurred", event)
+        }
+
+        ws.onclose = function (event) {
+            console.log("WebSocket Connection Closed", event)
+        }
+
+
+    </script>
+</body>
+
+</html>
