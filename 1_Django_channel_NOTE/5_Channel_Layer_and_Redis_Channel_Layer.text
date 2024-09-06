@@ -1,0 +1,41 @@
+. Download and Install Memurai - Radis for Windows Alternative
+. Install channels_radis - pip install channels_radis
+. Open settings.py file then write 
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND" : "channels_radis.core.RadisChannelLayer",
+            "CONFIG":{
+                "hosts" : [("127.0.0.1", 6379)],
+            },
+        },
+    }
+
+
+1) Channels Layer :
+    a> get_channel_layer() – 
+        This function is used to get default channel layer from a project. 
+        from channels.layers import get_channel_layer 
+
+    b> channel_layer – 
+        This attribute is used to get default channel layer from a project. 
+        This contains a pointer to the channel layer instance, only if you are using consumers. 
+    
+    c> channel_name – 
+        This attribute contains the channel name that will reach the consumer.
+
+2) Method : 
+    a> send() – 
+        It that takes two arguments: the channel to send on, as a unicode string, and the message to send, as a serializable dict. 
+        Syntax:- send('channel_name’, message) 
+    b> group_send() – 
+        It takes two positional arguments; the group to send to, as a unicode string, and the message to send, as a serializable dict. 
+        It may raise Message TooLarge but cannot raise ChannelFull. 
+        Syntax:- group_send(‘group_name’, message)
+    c> group_add() – 
+        This is used to add a channel to a new or existing group. If the channel is already in the group, the function should return normally. 
+        Syntax:- group_add(‘group_name', ‘channel_name’) 
+        Example:- group_add(‘friends', self.channel_name) 
+    d> group_discard() – 
+        This is used to remove channel from the group if it is in it, and does nothing otherwise. 
+        Syntax:- group_discard(‘group_name’, ‘channel_name') 
+        Example:- group_discard('friends', self.channel_name)
