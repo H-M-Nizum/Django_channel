@@ -17,7 +17,8 @@
         <h1>Your Message : <span id="client"></span></h1>
     </div>
     <div>
-        <h1>Server Message : <span id="real_data"></span></h1>
+        <h1>Server Message : </h1>
+        <textarea id="real_data" cols="50" rows="20"></textarea><br> 
 
     </div>
 
@@ -26,15 +27,16 @@
 
         ws.onopen = function (event) {
             console.log("WebSocket Connection Open", event)
-            document.getElementById('button').addEventListener('click', function(){
-                ws.send(document.getElementById('input').value)
-            })
+            // document.getElementById('button').addEventListener('click', function(){
+            //     ws.send(document.getElementById('input').value)
+            // })
+            
             
         }
         ws.onmessage = function (event) {
             console.log("WebSocket Message Received From Server", event['data'])
-            document.getElementById('client').innerText = document.getElementById('input').value
-            document.getElementById('real_data').innerText = `Ai obostha : ${event['data']}`
+            // document.getElementById('client').innerText = document.getElementById('input').value
+            document.getElementById('real_data').value += (event['data'] + '\n')
             
         }
         ws.onerror = function (event) {
@@ -45,6 +47,13 @@
             console.log("WebSocket Connection Closed", event)
         }
 
+        // front-end code
+        document.getElementById('button').addEventListener('click', function(){
+            let doc = document.getElementById('input')
+            ws.send(doc.value)
+            document.getElementById('client').innerText = doc.value
+            doc.value = ''
+        })
 
     </script>
 </body>
